@@ -1,6 +1,6 @@
 create database Ejercicio02;
 use Ejercicio02;
-create table alumno(
+create table alumnos(
 id_alumno int auto_increment,
 dni varchar(10) not null unique,
 dirección varchar(40),
@@ -9,16 +9,16 @@ telefono int,
 edad int,
 PRIMARY KEY (id_alumno)
 );
-create table trabajador(
+create table trabajadores(
 id_alumno int,
 cif varchar(10),
 direccion_empresa varchar(40),
 PRIMARY KEY (cif),
-FOREIGN KEY (id_alumno) REFERENCES alumno(id_alumno)
+FOREIGN KEY (id_alumno) REFERENCES alumnos(id_alumno)
 ON DELETE cascade
 ON UPDATE cascade
 );
-create table profesor(
+create table profesores(
 id_profesor int auto_increment,
 dni varchar(10) not null unique,
 nombre varchar(25),
@@ -27,36 +27,36 @@ dirección varchar(40),
 telefono int,
 PRIMARY KEY (id_profesor)
 );
-create table curso(
+create table cursos(
 id_curso int auto_increment,
 programa varchar(100),
 horas_duracion int,
 titulo varchar(50),
 PRIMARY KEY(id_curso)
 );
-create table hacer(
+create table alumnos_cursos(
 alumno_cursando int,
 curso_activo int,
 nota_alumno int,
 PRIMARY KEY (alumno_cursando, curso_activo),
-FOREIGN KEY (alumno_cursando) REFERENCES alumno(id_alumno)
+FOREIGN KEY (alumno_cursando) REFERENCES alumnos(id_alumno)
 ON DELETE cascade
 ON UPDATE cascade,
-FOREIGN KEY (curso_activo) REFERENCES curso(id_curso)
+FOREIGN KEY (curso_activo) REFERENCES cursos(id_curso)
 ON DELETE cascade
 ON UPDATE cascade
 );
-create table impartir(
+create table profesores_cursos(
 fecha_inicio date,
 fin_curso date,
 num_curso int unique,
 curso_impartido int,
 profesor_activo int,
 PRIMARY KEY (curso_impartido, profesor_activo),
-FOREIGN KEY (profesor_activo) REFERENCES profesor(id_profesor)
+FOREIGN KEY (profesor_activo) REFERENCES profesores(id_profesor)
 ON DELETE cascade
 ON UPDATE cascade,
-FOREIGN KEY (curso_impartido) REFERENCES curso(id_curso)
+FOREIGN KEY (curso_impartido) REFERENCES cursos(id_curso)
 ON DELETE cascade
 ON UPDATE cascade
 );
