@@ -1,0 +1,72 @@
+create database Ejercicio14;
+use Ejercicio14;
+create table usuario (
+id_usuario int auto_increment,
+contraseña varchar(20),
+nombre varchar(50),
+apellidos varchar(100),
+dirección varchar(200),
+telefono int,
+email varchar(100) unique,
+foto blob,
+celebridad boolean,
+PRIMARY KEY (id_usuario)
+);
+create table bloqueado (
+id_bloqueo int auto_increment,
+id_usuario int,
+id_usuario_bloqueado int,
+PRIMARY KEY (id_bloqueo),
+FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario)
+ON DELETE cascade
+ON UPDATE cascade,
+FOREIGN KEY (id_usuario_bloqueado) REFERENCES usuario(id_usuario)
+ON DELETE cascade
+ON UPDATE cascade
+);
+create table contacto (
+id_contacto int auto_increment,
+id_usuario int,
+id_usuario_contacto int,
+comentario varchar(200),
+PRIMARY KEY (id_contacto),
+FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario)
+ON DELETE cascade
+ON UPDATE cascade,
+FOREIGN KEY (id_usuario_contacto) REFERENCES usuario(id_usuario)
+ON DELETE cascade
+ON UPDATE cascade
+);
+create table grupo (
+id_grupo int auto_increment,
+id_usuario int,
+nombre_grupo varchar(100),
+PRIMARY KEY (id_grupo),
+FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario)
+ON DELETE cascade
+ON UPDATE cascade
+);
+create table contactos_grupo (
+id_contacto_grupo int auto_increment,
+id_grupo int,
+id_contacto int,
+PRIMARY KEY (id_contacto_grupo),
+FOREIGN KEY (id_grupo) REFERENCES grupo(id_grupo)
+ON DELETE cascade
+ON UPDATE cascade,
+FOREIGN KEY (id_contacto) REFERENCES contacto(id_contacto)
+ON DELETE cascade
+ON UPDATE cascade
+);
+create table publicacion(
+id_publicacion int auto_increment,
+id_usuario int,
+contenido text,
+medios blob,
+fecha_publicacion date,
+visibilidad SET('Pública', 'Privada', 'Contactos') DEFAULT 'Pública',
+PRIMARY KEY (id_publicacion),
+FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario)
+ON DELETE cascade
+ON UPDATE cascade
+);
